@@ -27,18 +27,17 @@ public:
 
     // Default ctor
     // Set Item to zero.
-    InventoryItem()
+    InventoryItem(std::string name , int count = 0)
     {
-        setItem();
+        setItem(count, name);
     }
 
-    // Ctor from hours, minutes, seconds
-    // Set Item to given # of hours, minutes, seconds past midnight.
-    // Extreme values of hh, mm, ss are corrected by shifting some whole
-    // number of days forward or backward.
-    InventoryItem()
+    // Ctor from name and count
+    // Set Item to given name and count
+    // count must be >= 0
+    InventoryItem(int count, std::string name)
     {
-        setItem();
+        setItem(count, name);
     }
 
     // Big 5: use compiler-generated versions
@@ -52,28 +51,28 @@ public:
 public:
 
     // op++ [pre]
-    // Move Item .
+    // Increment Item _count pre increment.
     InventoryItem & operator++()
     {
         
     }
 
     // op++ [post]
-    // Move Item .
+    // Increment Item _count post increment.
     InventoryItem operator++([[maybe_unused]] int dummy)
     {
         
     }
 
     // op-- [pre]
-    // Move Item .
+    // Decrement Item _count pre decrement.
     InventoryItem & operator--()
     {
        
     }
 
     // op-- [post]
-    // Move Item 
+    // Decrement Item _count post decrement.
     InventoryItem operator--([[maybe_unused]] int dummy)
     {
        
@@ -88,7 +87,7 @@ public:
 
     // setItem
     // Set Item to given
-    void setItem();
+    void setItem(int count, std::string name);
 
 // ***** InventoryItem: Data members *****
 private:
