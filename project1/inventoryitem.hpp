@@ -27,9 +27,10 @@ public:
 
     // Default ctor
     // Set Item to zero.
-    InventoryItem(std::string name , int count = 0)
+    InventoryItem()
     {
-        setItem(count, name);
+        setCount(0);
+        setName("UNAMED");
     }
 
     // Ctor from name and count
@@ -37,7 +38,8 @@ public:
     // count must be >= 0
     InventoryItem(int count, std::string name)
     {
-        setItem(count, name);
+        setCount(count);
+        setName(name);
     }
 
     // Big 5: use compiler-generated versions
@@ -81,13 +83,22 @@ public:
 // ***** InventoryItem: General public functions *****
 public:
 
-    // getItem
+    // getCount
     // Return 
-    void getItem() const;
+    int getCount() const;
 
-    // setItem
+    // getName
+    // Returns a product name
+    std::string getName() const;
+
+    // setCount
     // Set Item to given
-    void setItem(int count, std::string name);
+    void setCount(int count);
+
+    // setName
+    // Set Name to given
+    void setName(std::string name);
+
 
 // ***** InventoryItem: Data members *****
 private:
