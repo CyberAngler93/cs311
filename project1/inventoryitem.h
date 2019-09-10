@@ -99,27 +99,28 @@ public:
 public:
 
     // getNumber
-    // Return 
+    // Post: returns the number of an item.
     int getNumber() const;
 
     // getName
-    // Returns a product name
+    // Post: Returns a product name.
     std::string getName() const;
 
     // setNumber
-    // Set Item to given
+    //This will take care of negative ints passed by user.
+    // Post: Sets a the _count to count or 0.
     void setNumber(int count);
 
     // setName
-    // Set Name to given
+    // Post: Set _name to name
     void setName(std::string name);
 
     // toString 
-    // returns a string representation of item
+    // Post: returns a string representation of item in format "_name (_count)
     std::string toString() const;
 
     //empty
-    //returns a bool if inventory _count is zero
+    //Post: returns a bool if inventory _count is zero
     bool empty() const;
 
 // ***** InventoryItem: Data members *****
@@ -136,14 +137,16 @@ private:
 
 //operator==
 //compares two item obejcts for equivalance.
+//Post: Returns True for equivalance False for non.
 bool operator==(const InventoryItem &lhs, const InventoryItem &rhs);
 
 //operator!=
-//compare two item objects for non equivalance.
+//compare two item objects for non equivalance by using == operator 
+//Post: Returns True for non equivalance and False for Equivalance
 bool operator!=(const InventoryItem &lhs, const InventoryItem &rhs);
 
 // operator<< (ostream,InventoryItem)
-// Prints given InventoryItem object as 
+//Post: Prints given InventoryItem object by using toString.
 std::ostream & operator<<(std::ostream & os,
                           const InventoryItem & i);
 
