@@ -67,7 +67,7 @@ public:
 
     // op++ [post]
     // Increment Item _count by 1.
-    InventoryItem operator++([[maybe_unused]] int dummy)
+    InventoryItem operator++(int number)
     {
         auto save = *this;
         ++(*this);
@@ -88,7 +88,7 @@ public:
 
     // op-- [post]
     // Decrement Item _count by 1.
-    InventoryItem operator--([[maybe_unused]] int dummy)
+    InventoryItem operator--(int number)
     {
        auto save = *this;
        --(*this);
