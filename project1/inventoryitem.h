@@ -33,16 +33,16 @@ public:
     // Set Name to UNAMED
     InventoryItem()
     {
-        setCount(0);
-        setName("UNAMED");
+        setNumber(0);
+        setName("UNNAMED");
     }
 
     // Ctor from name and count
     // Set Item to given name and count
     // count must be >= 0
-    InventoryItem(int count, std::string name)
+    InventoryItem(std::string name, int count)
     {
-        setCount(count);
+        setNumber(count);
         setName(name);
     }
 
@@ -98,17 +98,17 @@ public:
 // ***** InventoryItem: General public functions *****
 public:
 
-    // getCount
+    // getNumber
     // Return 
-    int getCount() const;
+    int getNumber() const;
 
     // getName
     // Returns a product name
     std::string getName() const;
 
-    // setCount
+    // setNumber
     // Set Item to given
-    void setCount(int count);
+    void setNumber(int count);
 
     // setName
     // Set Name to given
@@ -144,8 +144,8 @@ bool operator!=(const InventoryItem &lhs, const InventoryItem &rhs);
 
 // operator<< (ostream,InventoryItem)
 // Prints given InventoryItem object as 
-std::ostream & operator<<(std::ostream & out,
-                          const InventoryItem & t);
+std::ostream & operator<<(std::ostream & os,
+                          const InventoryItem & i);
 
 
 #endif  //#ifndef FILE_INVENTORYITEM_H_INCLUDED
