@@ -50,7 +50,7 @@ void InventoryItem::setName(string name){
 //toString
 //(See header for docs.)
 string InventoryItem::toString()const{
-    return "fix";
+    return _name + " (" + std::to_string(_count) + ")";
 }
 
 //empty
