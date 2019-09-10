@@ -19,14 +19,18 @@
 
 
 // class InventoryItem
-// Item 
+// Item is represented by a string for name and has a number of item.
+//Invariants:
+//      _name is a valid c++ string
+//      0 <= _count 
 class InventoryItem {
 
 // ***** InventoryItem: Ctors, dctor, op= *****
 public:
 
     // Default ctor
-    // Set Item to zero.
+    // Set Count to zero.
+    // Set Name to UNAMED
     InventoryItem()
     {
         setCount(0);
@@ -53,31 +57,42 @@ public:
 public:
 
     // op++ [pre]
-    // Increment Item _count pre increment.
+    // Increment Item _count by 1.
     InventoryItem & operator++()
     {
+        _count++;
+        return *this;
         
     }
 
     // op++ [post]
-    // Increment Item _count post increment.
+    // Increment Item _count by 1.
     InventoryItem operator++([[maybe_unused]] int dummy)
     {
-        
+        auto save = *this;
+        ++(*this);
+        return save;
     }
 
     // op-- [pre]
-    // Decrement Item _count pre decrement.
+    // Decrement Item _count by 1.
+    // If count goes below zero set count to zero.
     InventoryItem & operator--()
     {
-       
+       _count--;
+       if(_count < 0){
+           _count = 0;
+       }
+       return *this;
     }
 
     // op-- [post]
-    // Decrement Item _count post decrement.
+    // Decrement Item _count by 1.
     InventoryItem operator--([[maybe_unused]] int dummy)
     {
-       
+       auto save = *this;
+       --(*this);
+       return save;
     }
 
 // ***** InventoryItem: General public functions *****
@@ -99,6 +114,13 @@ public:
     // Set Name to given
     void setName(std::string name);
 
+    // toString 
+    // returns a string representation of item
+    std::string toString() const;
+
+    //empty
+    //returns a bool if inventory _count is zero
+    bool empty() const;
 
 // ***** InventoryItem: Data members *****
 private:
@@ -112,6 +134,13 @@ private:
 // class InventoryItem - Declarations of associated global operators
 // *********************************************************************
 
+//operator==
+//compares two item obejcts for equivalance.
+bool operator==(const InventoryItem &lhs, const InventoryItem &rhs);
+
+//operator!=
+//compare two item objects for non equivalance.
+bool operator!=(const InventoryItem &lhs, const InventoryItem &rhs);
 
 // operator<< (ostream,InventoryItem)
 // Prints given InventoryItem object as 
