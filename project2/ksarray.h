@@ -1,7 +1,7 @@
 // ksarray.h
 // Matthew Perry
 // Started: 2019-09-15
-// Finished: 2019-9-16
+// Finished: 
 //
 // For CS 311 Fall 2019
 // Header for class KSArray
@@ -29,6 +29,7 @@
 template <typename K>
 class KSArray
 {
+    friend void swap(KSArray<K> & one, KSArray<K> & two) noexcept;
 public:
     using size_type = std::size_t;
     using value_type = K;
@@ -38,7 +39,7 @@ private:
     value_type *_ptr;
     
     //TODO Write SWAP docs!
-    swap(KSArray & other) noexcept
+    mswap(KSArray & other) noexcept
     {
         using std::swap;
         swap(_size, other._size);
@@ -165,7 +166,7 @@ public:
    KSArray & operator=(const KSArray & rhs)
    {
        KSArray copy_of_rhs(rhs);
-       swap(copy_of_rhs);
+       mswap(copy_of_rhs);
        return *this;
    }
     /*  Move Assignment
@@ -174,7 +175,7 @@ public:
     */
    KSArray & operator=(const KSArray && rhs) noexcept
    {
-       swap(rhs);
+       mswap(rhs);
        return *this;
    }
 };
@@ -284,5 +285,11 @@ template <class K>
 bool operator >= (const KSArray<K> & lhs, const KSArray<K> & rhs)
 {
 	return ((lhs > rhs) || (lhs == rhs));
+}
+
+template <class K>
+void swap(KSArray<K> & one, KSArray<K> & two) noexcept
+{
+    one.mswap(two);
 }
 #endif
