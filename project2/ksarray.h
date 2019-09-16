@@ -133,7 +133,7 @@ public:
 
     /*  []operator
         PRE: Calling object must be non const 
-        POST: Returns address of index
+        POST: Returns address of index wihin KSArray
     */
    value_type & operator[](const size_type & index)
    {
@@ -142,7 +142,7 @@ public:
 
     /*  const []operator
         PRE: Calling object must be const 
-        POST: Returns address of index
+        POST: Returns address of index wihin KSArray
     */
     const value_type & operator[](const size_type & index) const
    {
