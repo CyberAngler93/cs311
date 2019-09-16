@@ -10,11 +10,9 @@
 #define KSARRAY_H
 //cstdlib included for std::size_t
 #include <cstdlib> 
-using std::size_t;
 
 //algorithm included for std::copy
 #include <algorithm>
-using std::copy;
 
 /*  class KSArray
     Simple RAII Class holding dynamic types and sizes via array
@@ -32,7 +30,7 @@ template <typename K>
 class KSArray
 {
 public:
-    using size_type = size_t;
+    using size_type = std::size_t;
     using value_type = K;
 
 private:
@@ -65,5 +63,24 @@ public:
            _ptr[i] = value;
        }
    }
+
+    /*  Copy ctor, preforms deep copy via std::copy from <algorithm>
+        PRE: begin and end must be defined
+        POST: deallocates rhs, creats new KSArray object equal to rhs
+    */   
+   KSArray(const KSArray & rhs): _size(rhs.size()), _ptr(new value_type[rhs.size()])
+   {
+       std::copy(rhs.being(), rhs.end(), _ptr);
+   }
+
+	/*dtor for KSArray
+	 * Pre: None
+	 * Post: Memory pointed to by _ptr is deallcated
+	 */ 
+	~KSArray()
+	{ 
+		delete [] _ptr;
+	}
+
 };
 #endif
