@@ -36,6 +36,15 @@ public:
 private:
     size_type _size;
     value_type *_ptr;
+    
+    //TODO Write SWAP docs!
+    swap(KSArray & other) noexcept
+    {
+        using std::swap;
+        swap(_size, other._size);
+        swap(_ptr, other._ptr);
+    }
+    
 
 public:
     /*  Default ctor
@@ -150,21 +159,24 @@ public:
    }
 
     /*  Copy assignment
-        PRE: operator, being , end, size must be defined. rhs must be a KSArray obj.
+        PRE: Swap must be defined
         POST: assigns rhs to *this
     */
    KSArray & operator=(const KSArray & rhs)
    {
-       if(this != &rhs)
-       {
-           delete[] _ptr;
-           _ptr = new value_type[rhs.size()];
-           _size = rhs.size();
-           std::copy(rhs.begin(), rhs.end(), _ptr);
-       }
+       KSArray copy_of_rhs(rhs);
+       swap(copy_of_rhs);
        return *this;
    }
-
+    /*  Move Assignment
+        PRE:Swap must be defined
+        POST:Returns the moved object to *this
+    */
+   KSArray & operator=(const KSArray && rhs) noexcept
+   {
+       swap(rhs);
+       return *this;
+   }
 };
 
 //Non Class Memeber Functions
