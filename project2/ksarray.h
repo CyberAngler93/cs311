@@ -1,7 +1,7 @@
 // ksarray.h
 // Matthew Perry
 // Started: 2019-09-15
-// 
+// Finished: 2019-9-16
 //
 // For CS 311 Fall 2019
 // Header for class KSArray
@@ -166,4 +166,111 @@ public:
    }
 
 };
+
+//Non Class Memeber Functions
+
+/*  operator == for KSArray.
+    Parameters: Two KSArray objects
+    PRE: operator != must be defined for value_type
+    POST: returns bool true if lhs == rhs else false
+*/
+template <class K>
+bool operator == (const KSArray<K> & lhs, const KSArray<K> & rhs)
+{
+    if(lhs.size() != rhs.size())
+    {
+        return false;
+    }
+    else
+    {
+        for (int i = 0; i < lhs.size(); i++)
+        {
+            if(lhs[i] != rhs[i])
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+/*  operator != for KSArray.
+    Parameters: Two KSArray objects
+    PRE: operator == must be defined for value_type
+    POST: returns bool true if lhs != rhs else false
+*/
+template <class K>
+bool operator != (const KSArray<K> & lhs, const KSArray<K> & rhs)
+{
+    return !(lhs == rhs);    
+}
+
+/*  operator < for KSArray.
+    Paramerters: Two KSArray objects.
+    PRE: The following must be defined for value_type Operator(s) ==,[],<,> and member function size.
+    POST: Returns true if lhs < rhs else false
+ */
+template <class K>
+bool operator < (const KSArray<K> & lhs, const KSArray<K> & rhs)
+{
+	if(lhs==rhs)
+	{
+		return false;
+	}
+	
+	for (int i=0; i<lhs.size(); ++i)
+	{
+		if(i==rhs.size())
+		{
+			return false;
+		}
+	
+		if(lhs[i]<rhs[i])
+		{
+			return true;
+		}
+		else if(lhs[i]>rhs[i])	
+		{
+			return false;
+		}
+	}	
+	if(lhs.size()<rhs.size())
+	{
+		return true;
+	}
+	return false;
+}
+
+/*  operator > for KSArray.
+    Paramerters: Two KSArray objects.
+    PRE: The following must be defined for value_type Operator(s) <=
+    POST: Returns true if lhs > rhs else false
+ */
+template <class K>
+bool operator > (const KSArray<K> & lhs, const KSArray<K> & rhs)
+{
+	return !(lhs <= rhs); 
+}
+
+/*  operator <= for KSArray.
+    Paramerters: Two KSArray objects.
+    PRE: The following must be defined for value_type Operator(s) <, ==
+    POST: Returns true if lhs <= rhs else false
+ */
+template <class K>
+bool operator <= (const KSArray<K> & lhs, const KSArray<K> & rhs)
+{
+	return ((lhs < rhs) || (lhs == rhs));
+}
+
+/*  operator >= for KSArray.
+    Paramerters: Two KSArray objects.
+    PRE: The following must be defined for value_type Operator(s) >, ==
+    POST: Returns true if lhs >= rhs else false
+ */
+template <class K>
+bool operator >= (const KSArray<K> & lhs, const KSArray<K> & rhs)
+{
+	return ((lhs > rhs) || (lhs == rhs));
+}
 #endif
