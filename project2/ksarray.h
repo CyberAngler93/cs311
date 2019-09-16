@@ -82,5 +82,88 @@ public:
 		delete [] _ptr;
 	}
 
+   //Memeber Functions for KSArray
+
+   /*   Memeber function size(). No parameters
+        PRE: N/A
+        POST: Returns a size_type for the size of KSArray
+   */
+    size_type size() const
+    {
+        return _size;
+    }
+
+   /*   Memeber function begin(). No parameters
+        PRE: Must be called on a non const KSArray object
+        POST: Returns the address of first element of KSArray Object
+   */
+    value_type *being()
+    {
+        return _ptr;
+    }
+
+    /*  Memeber function end(). No parameters
+        PRE: Must be called on a non const KSArray object
+        POST: Returns the address of last element of KSArray Object
+   */
+    value_type *end()
+    {
+        return(begin() + _size);
+    }
+
+   /*   Memeber function begin(). No parameters
+        PRE: Must be called on a const KSArray object
+        POST: Returns the address of first element of KSArray Object
+   */
+    const value_type *being() const
+    {
+        return _ptr;
+    }
+
+    /*  Memeber function end(). No parameters
+        PRE: Must be called on a const KSArray object
+        POST: Returns the address of last element of KSArray Object
+   */
+    const value_type *end() const
+    {
+        return(begin() + _size);
+    }
+
+    //Operators for KSArray
+
+    /*  []operator
+        PRE: Calling object must be non const 
+        POST: Returns address of index
+    */
+   value_type & operator[](const size_type & index)
+   {
+       return _ptr[index];
+   }
+
+    /*  const []operator
+        PRE: Calling object must be const 
+        POST: Returns address of index
+    */
+    const value_type & operator[](const size_type & index) const
+   {
+       return _ptr[index];
+   }
+
+    /*  Copy assignment
+        PRE: operator, being , end, size must be defined. rhs must be a KSArray obj.
+        POST: assigns rhs to *this
+    */
+   KSArray & operator=(const KSArray & rhs)
+   {
+       if(this != &rhs)
+       {
+           delete[] _ptr;
+           _ptr = new value_type[rhs.size()];
+           _size = rhs.size();
+           std::copy(rhs.begin(), rhs.end(), _ptr);
+       }
+       return *this;
+   }
+
 };
 #endif
