@@ -73,9 +73,9 @@ public:
        std::copy(rhs.being(), rhs.end(), _ptr);
    }
 
-	/*dtor for KSArray
-	 * Pre: None
-	 * Post: Memory pointed to by _ptr is deallcated
+	/* dtor for KSArray
+	 * PRE: None
+	 * POST: Memory pointed to by _ptr is deallcated
 	 */ 
 	~KSArray()
 	{ 
