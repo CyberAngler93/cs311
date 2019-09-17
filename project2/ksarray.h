@@ -11,7 +11,7 @@
 //cstdlib included for std::size_t
 #include <cstdlib> 
 
-//algorithm included for std::copy
+//algorithm included for std::copy, std::min, std::equal, std::swap
 #include <algorithm>
 
 /*  class KSArray
@@ -22,30 +22,27 @@
         _ptr points to memory allocated with new[]: owner *this
         Requirements of types:
             K must have these opperators: ==, !=, <, <=, >, >=, []
-            K must have copy ctor, copy assignment(=), being, end, size, dtor
+            K must have copy ctor, copy assignment(=), begin, end, size, dtor
             size_type must be non negative
     
 */
-template <typename K>
+template <typename T>
 class KSArray
-{
-    friend void swap(KSArray<K> & one, KSArray<K> & two) noexcept;
+{  
 public:
-    using size_type = std::size_t;
-    using value_type = K;
+    typedef T value_type;
+    typedef size_t size_type;
 
 private:
     size_type _size;
     value_type *_ptr;
     
     //TODO Write SWAP docs!
-    mswap(KSArray & other) noexcept
+   void mswap(KSArray & other)
     {
-        using std::swap;
-        swap(_size, other._size);
-        swap(_ptr, other._ptr);
+        std::swap(_size, other._size);
+        std::swap(_ptr, other._ptr);
     }
-    
 
 public:
     /*  Default ctor
@@ -78,10 +75,16 @@ public:
         PRE: begin and end must be defined
         POST: deallocates rhs, creats new KSArray object equal to rhs
     */   
-   KSArray(const KSArray & rhs): _size(rhs.size()), _ptr(new value_type[rhs.size()])
+   KSArray(const KSArray &rhs): _size(rhs.size()), _ptr(new value_type[rhs.size()])
    {
-       std::copy(rhs.being(), rhs.end(), _ptr);
+       std::copy(rhs.begin(), rhs.end(), _ptr);
    }
+    /*  Move Constructor
+        PRE:swap must be defined for object
+        POST:returns swapped KSArray object with valid empty object
+    */
+   KSArray(KSArray && other)noexcept 
+        :_size(0),_ptr(nullptr){mswap(other);}
 
 	/* dtor for KSArray
 	 * PRE: None
@@ -107,7 +110,7 @@ public:
         PRE: Must be called on a non const KSArray object
         POST: Returns the address of first element of KSArray Object
    */
-    value_type *being()
+    value_type *begin()
     {
         return _ptr;
     }
@@ -125,7 +128,7 @@ public:
         PRE: Must be called on a const KSArray object
         POST: Returns the address of first element of KSArray Object
    */
-    const value_type *being() const
+    const value_type *begin() const
     {
         return _ptr;
     }
@@ -163,21 +166,26 @@ public:
         PRE: Swap must be defined
         POST: assigns rhs to *this
     */
-   KSArray & operator=(const KSArray & rhs)
+   KSArray<T> & operator=(const KSArray &other)
    {
-       KSArray copy_of_rhs(rhs);
-       mswap(copy_of_rhs);
+       if(this != &other)
+    {
+        KSArray copyOfother(other);
+        mswap(copyOfother);
+    }
        return *this;
    }
     /*  Move Assignment
         PRE:Swap must be defined
         POST:Returns the moved object to *this
     */
-   KSArray & operator=(const KSArray && rhs) noexcept
+   KSArray<T> & operator=(KSArray &&other) noexcept
    {
-       mswap(rhs);
-       return *this;
+        if(this != &other)
+            mswap(other);
+        return *this;
    }
+
 };
 
 //Non Class Memeber Functions
@@ -187,24 +195,10 @@ public:
     PRE: operator != must be defined for value_type
     POST: returns bool true if lhs == rhs else false
 */
-template <class K>
-bool operator == (const KSArray<K> & lhs, const KSArray<K> & rhs)
+template <typename T>
+bool operator==(const KSArray<T> &lhs, const KSArray<T> &rhs)
 {
-    if(lhs.size() != rhs.size())
-    {
-        return false;
-    }
-    else
-    {
-        for (int i = 0; i < lhs.size(); i++)
-        {
-            if(lhs[i] != rhs[i])
-            {
-                return false;
-            }
-        }
-    }
-    return true;
+   return std::equal(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 }
 
 /*  operator != for KSArray.
@@ -212,10 +206,10 @@ bool operator == (const KSArray<K> & lhs, const KSArray<K> & rhs)
     PRE: operator == must be defined for value_type
     POST: returns bool true if lhs != rhs else false
 */
-template <class K>
-bool operator != (const KSArray<K> & lhs, const KSArray<K> & rhs)
+template <typename T>
+bool operator!=(const KSArray<T> &lhs, const KSArray<T> &rhs)
 {
-    return !(lhs == rhs);    
+    return !(lhs == rhs); //canonical
 }
 
 /*  operator < for KSArray.
@@ -223,35 +217,19 @@ bool operator != (const KSArray<K> & lhs, const KSArray<K> & rhs)
     PRE: The following must be defined for value_type Operator(s) ==,[],<,> and member function size.
     POST: Returns true if lhs < rhs else false
  */
-template <class K>
-bool operator < (const KSArray<K> & lhs, const KSArray<K> & rhs)
+template <typename T>
+bool operator<(const KSArray<T> &lhs, const KSArray<T> &rhs)
 {
-	if(lhs==rhs)
-	{
-		return false;
-	}
-	
-	for (int i=0; i<lhs.size(); ++i)
-	{
-		if(i==rhs.size())
-		{
-			return false;
-		}
-	
-		if(lhs[i]<rhs[i])
-		{
-			return true;
-		}
-		else if(lhs[i]>rhs[i])	
-		{
-			return false;
-		}
-	}	
-	if(lhs.size()<rhs.size())
-	{
-		return true;
-	}
-	return false;
+    size_t mSize = std::min(lhs.size(), rhs.size());
+
+    for(size_t i = 0; i < mSize; ++i)
+    {
+        if(lhs[i] < rhs[i])
+            return true;
+        else if(rhs[i] < lhs[i])
+            return false;
+    }
+    return lhs.size() < rhs.size();
 }
 
 /*  operator > for KSArray.
@@ -259,8 +237,8 @@ bool operator < (const KSArray<K> & lhs, const KSArray<K> & rhs)
     PRE: The following must be defined for value_type Operator(s) <=
     POST: Returns true if lhs > rhs else false
  */
-template <class K>
-bool operator > (const KSArray<K> & lhs, const KSArray<K> & rhs)
+template <typename T>
+bool operator>(const KSArray<T> &lhs, const KSArray<T> &rhs)
 {
 	return !(lhs <= rhs); 
 }
@@ -270,10 +248,10 @@ bool operator > (const KSArray<K> & lhs, const KSArray<K> & rhs)
     PRE: The following must be defined for value_type Operator(s) <, ==
     POST: Returns true if lhs <= rhs else false
  */
-template <class K>
-bool operator <= (const KSArray<K> & lhs, const KSArray<K> & rhs)
+template <typename T>
+bool operator<=(const KSArray<T> &lhs, const KSArray<T> &rhs)
 {
-	return ((lhs < rhs) || (lhs == rhs));
+	return !(rhs < lhs);
 }
 
 /*  operator >= for KSArray.
@@ -281,15 +259,10 @@ bool operator <= (const KSArray<K> & lhs, const KSArray<K> & rhs)
     PRE: The following must be defined for value_type Operator(s) >, ==
     POST: Returns true if lhs >= rhs else false
  */
-template <class K>
-bool operator >= (const KSArray<K> & lhs, const KSArray<K> & rhs)
+template <typename T>
+bool operator>=(const KSArray<T> &lhs, const KSArray<T> &rhs)
 {
-	return ((lhs > rhs) || (lhs == rhs));
+	return !(lhs < rhs);
 }
 
-template <class K>
-void swap(KSArray<K> & one, KSArray<K> & two) noexcept
-{
-    one.mswap(two);
-}
 #endif
