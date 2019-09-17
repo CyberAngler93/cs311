@@ -212,7 +212,7 @@ bool operator==(const KSArray<T> &lhs, const KSArray<T> &rhs)
 template <typename T>
 bool operator!=(const KSArray<T> &lhs, const KSArray<T> &rhs)
 {
-    return !(lhs == rhs); //canonical
+    return !(lhs == rhs); //canonical representation
 }
 
 /*  operator < for KSArray.
@@ -243,7 +243,7 @@ bool operator<(const KSArray<T> &lhs, const KSArray<T> &rhs)
 template <typename T>
 bool operator>(const KSArray<T> &lhs, const KSArray<T> &rhs)
 {
-	return !(lhs <= rhs); 
+	return !(lhs <= rhs); //canonical representation
 }
 
 /*  operator <= for KSArray.
@@ -254,7 +254,7 @@ bool operator>(const KSArray<T> &lhs, const KSArray<T> &rhs)
 template <typename T>
 bool operator<=(const KSArray<T> &lhs, const KSArray<T> &rhs)
 {
-	return !(rhs < lhs);
+	return !(rhs < lhs); //canonical representation
 }
 
 /*  operator >= for KSArray.
@@ -265,7 +265,7 @@ bool operator<=(const KSArray<T> &lhs, const KSArray<T> &rhs)
 template <typename T>
 bool operator>=(const KSArray<T> &lhs, const KSArray<T> &rhs)
 {
-	return !(lhs < rhs);
+	return !(lhs < rhs); //canonical representation
 }
 
 #endif
