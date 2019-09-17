@@ -37,7 +37,10 @@ private:
     size_type _size;
     value_type *_ptr;
     
-    //TODO Write SWAP docs!
+    /*  Swap func for KSArray
+        PRE: None
+        POST: None
+    */
    void mswap(KSArray & other)
     {
         std::swap(_size, other._size);
