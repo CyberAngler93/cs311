@@ -1,7 +1,7 @@
 // ksarray.h
 // Matthew Perry
 // Started: 2019-09-15
-// Finished: 
+// Finished: 2019-9-17
 //
 // For CS 311 Fall 2019
 // Header for class KSArray
