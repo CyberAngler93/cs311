@@ -87,7 +87,7 @@ ValueType lookup(const LLNode<ValueType> * head,
        }
        else
        {
-           count++
+           count++;
            head = head->_next;
        }
    }
