@@ -65,13 +65,36 @@ struct LLNode {                                                     // *
 // Do not alter the lines above                                     // *
 // **************************************************************** // *
 
-
+/* Value Type takes an LLNode pointer and index
+** PRE: Index must be valid size_t
+** POST: If index is valid, returns the data at node.
+** ERROR: Will throw std::out_of_range exception if passed index is out of range.
+*/
 template <typename ValueType>
 ValueType lookup(const LLNode<ValueType> * head,
                  std::size_t index)
 {
-    return ValueType();  // Dummy return
-    // TODO: Write this!!!
+   size_t count = 0;
+   if(head == 0)
+   {
+       throw std::out_of_range("Passed index is out of range");
+   }
+   while(head != 0)
+   {
+       if(count == index)
+       {
+           return (head->_data);
+       }
+       else
+       {
+           count++
+           head = head->_next;
+       }
+   }
+   if(count >= index)
+   {
+       throw std::out_of_range("Passed index is out of range");
+   }
 }
 
 
