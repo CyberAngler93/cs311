@@ -1,9 +1,10 @@
-// dp3.cpp  SKELETON
-// Glenn G. Chappell
-// 2019-09-24
-//
+// dp3.cpp  
+// Matt Perry
+// Started: 2019-09-25
+// Finished: 
 // For CS 311 Fall 2019
 // Source for Project 3 Functions
+// Skeleton file supplied by Glenn G. Chapell 
 
 #include "dp3.h"       // For Project 3 prototypes & templates
 
