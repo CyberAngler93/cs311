@@ -1,7 +1,7 @@
 // dp3.cpp  
 // Matt Perry
 // Started: 2019-09-25
-// Finished: 
+// Finished: 2019-09-25
 // For CS 311 Fall 2019
 // Source for Project 3 Functions
 // Skeleton file supplied by Glenn G. Chapell 
