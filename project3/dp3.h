@@ -10,7 +10,7 @@
 
 #include <cstddef>     // For std::size_t
 #include <functional>  // For std::function
-
+#include <algorithm>   // For std::is_sorted
 
 // **************************************************************** // *
 // Begin DO-NOT-CHANGE section                                      // *
@@ -82,7 +82,7 @@ ValueType lookup(const LLNode<ValueType> * head,
    }
    while(head != 0)
    {
-       if(count == index)
+       if(index == count)
        {
            return (head->_data);
        }
@@ -92,7 +92,7 @@ ValueType lookup(const LLNode<ValueType> * head,
            head = head->_next;
        }
    }
-   if(count >= index)
+   if(index >= count)
    {
        throw std::out_of_range("Passed index is out of range");
    }
@@ -103,13 +103,17 @@ ValueType lookup(const LLNode<ValueType> * head,
 void didItThrow(const std::function<void()> & ff,
                 bool & threw);
 
-
+/* checkSorted
+** PRE:First and Last must be forward iterators
+** POST:Returns bool from std::is_sorted true if sorted between first and last
+** TYPE:NONE
+** ERROR:NONE
+*/
 template <typename FDIter>
 bool checkSorted(FDIter first,
                  FDIter last)
 {
-    return false;  // Dummy return
-    // TODO: Write this!!!
+    return (std::is_sorted(first,last));
 }
 
 
